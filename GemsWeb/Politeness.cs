@@ -113,7 +113,7 @@ namespace GemsWeb
         /// Will block the thread if the URL refers to a domain
         /// that was used to recently.
         /// </summary>
-        /// <param name="pURL"></param>
+        /// <param name="pURL">The URL to check.</param>
         public void Wait(string pURL)
         {
             _logger.Finer("{0}: {1}", _count, pURL);
