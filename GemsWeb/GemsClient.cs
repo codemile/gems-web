@@ -7,6 +7,7 @@ namespace GemsWeb
     /// <summary>
     /// Overrides the WebClient to allow control over some settings.
     /// </summary>
+    [Obsolete]
     public class GemsClient : WebClient
     {
         /// <summary>
@@ -36,7 +37,7 @@ namespace GemsWeb
         /// <summary>
         /// Set the request timeout.
         /// </summary>
-        protected override WebRequest GetWebRequest(Uri pAddress)
+        protected override System.Net.WebRequest GetWebRequest(Uri pAddress)
         {
             HttpWebRequest request = base.GetWebRequest(pAddress) as HttpWebRequest;
             Debug.Assert(request != null, "request != null");

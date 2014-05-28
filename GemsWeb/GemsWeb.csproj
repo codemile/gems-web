@@ -33,19 +33,21 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GemsClient.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Requesters\iRequest.cs" />
+    <Compile Include="Responses\iResponse.cs" />
+    <Compile Include="Requesters\GetRetry.cs" />
     <Compile Include="Politeness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requesters\GetBitmap.cs" />
     <Compile Include="UserAgent.cs" />
+    <Compile Include="Requesters\GetStream.cs" />
+    <Compile Include="ResponseContainer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\gems-logger\Logging\Logging.csproj">
