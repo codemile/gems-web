@@ -43,6 +43,7 @@
     </Compile>
     <Compile Include="Readers\iStreamReaderFactory.cs" />
     <Compile Include="iDownloader.cs" />
+    <Compile Include="Readers\TextReader.cs" />
     <Compile Include="Responses\iResponseFactory.cs" />
     <Compile Include="Readers\iStreamReader.cs" />
     <Compile Include="Readers\TextStreamReader.cs" />

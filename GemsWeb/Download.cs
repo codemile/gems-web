@@ -90,7 +90,7 @@ namespace GemsWeb
                         {
                             throw new DownloadException(string.Format("Content-type: [{0}] has no reader.", contentType));
                         }
-                        iResponse response = reader.Read(contentType, resp.ContentLength, stream);
+                        iResponse response = reader.Read(contentType, stream);
                         return response;
                     }
                     finally

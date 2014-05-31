@@ -14,7 +14,7 @@ namespace GemsWebTests.Mock
             _response = pResponse;
         }
 
-        public iResponse Read(ContentType pContentType, long pLength, Stream pStream)
+        public iResponse Read(ContentType pContentType, Stream pStream)
         {
             return _response;
         }

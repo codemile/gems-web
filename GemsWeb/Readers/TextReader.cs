@@ -1,25 +1,25 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
 using System.Net.Mime;
+using System.Text;
 using GemsWeb.Responses;
 
 namespace GemsWeb.Readers
 {
     /// <summary>
-    /// Handles reading bitmaps from the input stream.
+    /// Handles reading text from the input stream.
     /// </summary>
-    public class BitmapReader : iStreamReader
+    public class TextReader : iStreamReader
     {
         /// <summary>
-        /// Creates responses.
+        /// Creates the response object.
         /// </summary>
         private readonly iResponseFactory _responseFactory;
 
         /// <summary>
-        /// Constructor
+        /// Constructor.
         /// </summary>
-        public BitmapReader(iResponseFactory pResponseFactory)
+        public TextReader(iResponseFactory pResponseFactory)
         {
             if (pResponseFactory == null)
             {
@@ -29,13 +29,13 @@ namespace GemsWeb.Readers
         }
 
         /// <summary>
-        /// Creates a bitmap from the input stream.
+        /// Handles reading the text.
         /// </summary>
         public iResponse Read(ContentType pContentType, Stream pStream)
         {
-            using (Image img = Image.FromStream(pStream))
+            using (StreamReader reader = new StreamReader(pStream, Encoding.GetEncoding(pContentType.CharSet)))
             {
-                return _responseFactory.Create(pContentType, new Bitmap(img));
+                return _responseFactory.Create(pContentType, reader.ReadToEnd());
             }
         }
     }

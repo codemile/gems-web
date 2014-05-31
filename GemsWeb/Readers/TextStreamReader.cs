@@ -14,7 +14,7 @@ namespace GemsWeb.Readers
             _factory = pFactory;
         }
 
-        public iResponse Read(ContentType pContentType, long pLength, Stream pStream)
+        public iResponse Read(ContentType pContentType, Stream pStream)
         {
             using (StreamReader reader = new StreamReader(pStream, Encoding.GetEncoding(pContentType.CharSet)))
             {
