@@ -8,11 +8,24 @@ namespace GemsWeb.Responses
     /// </summary>
     public class Response : iResponse
     {
+        /// <summary>
+        /// The content type.
+        /// </summary>
         private readonly ContentType _contentType;
-        private readonly object _data;
-        private readonly Exception _exception;
-        private readonly bool _success;
 
+        /// <summary>
+        /// The response data.
+        /// </summary>
+        private readonly object _data;
+
+        /// <summary>
+        /// The last exception.
+        /// </summary>
+        private readonly Exception _exception;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Response(ContentType pContentType, object pData)
         {
             if (pContentType == null)
@@ -27,15 +40,21 @@ namespace GemsWeb.Responses
             _contentType = pContentType;
             _data = pData;
             _exception = null;
-            _success = true;
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Response(Exception pException)
         {
+            if (pException == null)
+            {
+                throw new NullReferenceException("pException is null.");
+            }
+
             _contentType = null;
             _data = null;
             _exception = pException;
-            _success = false;
         }
 
         /// <summary>
@@ -68,7 +87,7 @@ namespace GemsWeb.Responses
         public string getMessage()
         {
             return _exception == null
-                ? (_contentType == null ? "error" : _contentType.ToString())
+                ? _contentType.ToString()
                 : _exception.Message;
         }
 
@@ -77,7 +96,7 @@ namespace GemsWeb.Responses
         /// </summary>
         public bool isSuccess()
         {
-            return _success;
+            return _exception == null && _data != null;
         }
     }
 }
