@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net;
+using System.Text;
 
 namespace GemsWeb
 {
@@ -31,13 +32,13 @@ namespace GemsWeb
             _timeout = 1000 * pTimeout;
 
             // Bug fix: Stops strange characters from appearing in articles.
-            Encoding = System.Text.Encoding.UTF8;
+            Encoding = Encoding.UTF8;
         }
 
         /// <summary>
         /// Set the request timeout.
         /// </summary>
-        protected override System.Net.WebRequest GetWebRequest(Uri pAddress)
+        protected override WebRequest GetWebRequest(Uri pAddress)
         {
             HttpWebRequest request = base.GetWebRequest(pAddress) as HttpWebRequest;
             Debug.Assert(request != null, "request != null");

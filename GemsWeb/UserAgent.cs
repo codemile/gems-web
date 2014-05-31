@@ -11,9 +11,9 @@ namespace GemsWeb
         /// <returns>The user agent string.</returns>
         public static string Format(string pAppName, string pDomain, string pEmail)
         {
-            return string.Format("{0}/1.0 (+http://{1}; email:{2}; Mozilla/5.0; please report problems)", 
+            return string.Format("{0}/1.0 (+http://{1}; email:{2}; Mozilla/5.0; please report problems)",
                 pAppName,
-                pDomain, 
+                pDomain,
                 pEmail);
         }
     }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("GemsWeb")]
+[assembly: AssemblyTitle("GemsWebTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GemsWeb")]
+[assembly: AssemblyProduct("GemsWebTests")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("22808ac1-61c3-4377-8e63-06c306a00743")]
+[assembly: Guid("30fa5209-00a7-452d-a688-e935b80593c0")]
 
 // Version information for an assembly consists of the following four values:
 //

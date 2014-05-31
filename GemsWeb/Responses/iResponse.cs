@@ -1,26 +1,33 @@
-﻿using System.Drawing;
-using System.Net;
+﻿using System;
+using System.Net.Mime;
 
-namespace GemsWeb.Interfaces
+namespace GemsWeb.Responses
 {
     public interface iResponse
     {
-        WebExceptionStatus getStatus();
+        /// <summary>
+        /// If the response has data, then this is the content type for that data.
+        /// </summary>
+        ContentType getContentType();
 
         /// <summary>
-        /// This is the content type of the response.
+        /// Gets the RAW data object, or Null if there is no data.
         /// </summary>
-        string getContentType();
+        object getData();
 
         /// <summary>
-        /// If the request was successful. This is the
-        /// status code of the response.
+        /// A reference to an exception that are caught making the request.
         /// </summary>
-        HttpStatusCode getStatusCode();
+        Exception getException();
 
         /// <summary>
-        /// This reads the image.
+        /// A message describes this response. Usually the error message.
         /// </summary>
-        Bitmap ReadBitmap();
+        string getMessage();
+
+        /// <summary>
+        /// True if the request was successful.
+        /// </summary>
+        bool isSuccess();
     }
 }

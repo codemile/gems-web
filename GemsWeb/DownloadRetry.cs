@@ -1,25 +1,23 @@
 ﻿using System;
-using System.Drawing;
-using System.Net;
 using System.Threading;
-using GemsWeb.Interfaces;
+using GemsWeb.Responses;
 
-namespace GemsWeb.Requesters
+namespace GemsWeb
 {
     /// <summary>
     /// Handles multiple attempts at downloading web resource.
     /// </summary>
-    public class GetRetry : iRequest
+    public class DownloadRetry : iDownloader
     {
+        /// <summary>
+        /// The object that will perform the request.
+        /// </summary>
+        private readonly iDownloader _childRequester;
+
         /// <summary>
         /// Max number of retries.
         /// </summary>
         private readonly int _maxRetries;
-
-        /// <summary>
-        /// The object that will perform the request.
-        /// </summary>
-        private readonly iRequest _childRequester;
 
         /// <summary>
         /// The delay between retries (min is 1 second).
@@ -29,7 +27,7 @@ namespace GemsWeb.Requesters
         /// <summary>
         /// The URL to the image to download.
         /// </summary>
-        public GetRetry(int pMaxRetries, TimeSpan pRetryDelay, iRequest pChildRequester)
+        public DownloadRetry(int pMaxRetries, TimeSpan pRetryDelay, iDownloader pChildRequester)
         {
             _childRequester = pChildRequester;
             _maxRetries = Math.Min(5, Math.Max(1, pMaxRetries));
@@ -51,6 +49,7 @@ namespace GemsWeb.Requesters
             do
             {
                 iResponse resp = _childRequester.Get(pUrl);
+/*
                 switch (resp.getStatus())
                 {
                     case WebExceptionStatus.Success:
@@ -78,6 +77,7 @@ namespace GemsWeb.Requesters
                         retry = false;
                         break;
                 }
+*/
 
                 i++;
             } while (retry && i < _maxRetries);

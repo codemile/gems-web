@@ -34,20 +34,27 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\DownloadException.cs" />
     <Compile Include="GemsClient.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Requesters\iRequest.cs" />
+    <Compile Include="Readers\iStreamReaderFactory.cs" />
+    <Compile Include="iDownloader.cs" />
+    <Compile Include="Responses\iResponseFactory.cs" />
+    <Compile Include="Readers\iStreamReader.cs" />
+    <Compile Include="Readers\TextStreamReader.cs" />
     <Compile Include="Responses\iResponse.cs" />
-    <Compile Include="Requesters\GetRetry.cs" />
+    <Compile Include="DownloadRetry.cs" />
     <Compile Include="Politeness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Requesters\GetBitmap.cs" />
+    <Compile Include="Readers\BitmapReader.cs" />
+    <Compile Include="Readers\StreamReaderFactory.cs" />
     <Compile Include="UserAgent.cs" />
-    <Compile Include="Requesters\GetStream.cs" />
-    <Compile Include="ResponseContainer.cs" />
+    <Compile Include="Download.cs" />
+    <Compile Include="Responses\Response.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\gems-logger\Logging\Logging.csproj">

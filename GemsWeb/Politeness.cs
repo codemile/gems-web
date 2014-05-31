@@ -16,7 +16,7 @@ namespace GemsWeb
         /// <summary>
         /// Logging
         /// </summary>
-        private static readonly Logger _logger = Logger.Create(typeof(Politeness));
+        private static readonly Logger _logger = Logger.Create(typeof (Politeness));
 
         /// <summary>
         /// Used to control thread access
@@ -34,15 +34,6 @@ namespace GemsWeb
         private Dictionary<string, DateTime> _domainActivity;
 
         /// <summary>
-        /// The time difference between a DateTime and Now in milliseconds.
-        /// </summary>
-        private static int TimeDifference(DateTime pWhen)
-        {
-            TimeSpan delta = DateTime.Now.Subtract(pWhen);
-            return (int)Math.Abs(delta.TotalMilliseconds);
-        }
-
-        /// <summary>
         /// Size of history
         /// </summary>
         private int _count
@@ -54,6 +45,15 @@ namespace GemsWeb
                     return _domainActivity.Count;
                 }
             }
+        }
+
+        /// <summary>
+        /// The time difference between a DateTime and Now in milliseconds.
+        /// </summary>
+        private static int TimeDifference(DateTime pWhen)
+        {
+            TimeSpan delta = DateTime.Now.Subtract(pWhen);
+            return (int)Math.Abs(delta.TotalMilliseconds);
         }
 
         /// <summary>
