@@ -5,8 +5,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GemsWebTests.Readers
 {
     [TestClass]
-    public class BitmapReaderTests
+    public class TextStreamReaderTests
     {
-        private static Type _retester = typeof (BitmapReader);
+        private static Type _retester = typeof (TextStreamReader);
     }
 }

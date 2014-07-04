@@ -51,6 +51,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DownloadTests.cs" />
+    <Compile Include="Exceptions\DownloadExceptionTests.cs" />
+    <Compile Include="Mock\MockDownloader.cs" />
     <Compile Include="Mock\MockResponseFactory.cs" />
     <Compile Include="Mock\MockStreamReaderFactory.cs" />
     <Compile Include="Mock\MockResponse.cs" />
@@ -59,9 +61,17 @@
     <Compile Include="Readers\BitmapReaderTests.cs" />
     <Compile Include="Readers\StreamReaderFactoryTests.cs" />
     <Compile Include="Readers\TextReaderTests.cs" />
+    <Compile Include="Readers\TextStreamReaderTests.cs" />
     <Compile Include="Responses\ResponseTests.cs" />
+    <Compile Include="DownloadRetryTests.cs" />
+    <Compile Include="PolitenessTests.cs" />
+    <Compile Include="UserAgentTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ReTester\ReTester\ReTester.csproj">
+      <Project>{9695b10b-0cb9-4f93-8bbd-6d898822a3cf}</Project>
+      <Name>ReTester %28Public\ReTester\ReTester%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\GemsWeb\GemsWeb.csproj">
       <Project>{111FF981-8905-4A12-AB94-0F6ACEE0A824}</Project>
       <Name>GemsWeb</Name>

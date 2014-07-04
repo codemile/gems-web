@@ -1,20 +1,12 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using GemsWeb.Readers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GemsWebTests.Readers
 {
     [TestClass]
     public class StreamReaderFactoryTests
     {
-        [TestMethod]
-        public void CreateTest()
-        {
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        public void StreamReaderFactoryTest()
-        {
-            Assert.Fail();
-        }
+        private static Type _retester = typeof (StreamReaderFactory);
     }
 }

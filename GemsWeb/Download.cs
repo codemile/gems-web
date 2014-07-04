@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Mime;
+using GemsWeb.Annotations;
 using GemsWeb.Exceptions;
 using GemsWeb.Readers;
 using GemsWeb.Responses;
@@ -36,24 +37,26 @@ namespace GemsWeb
         /// <summary>
         /// Constructor
         /// </summary>
-        public Download(iStreamReaderFactory pStreamReaderFactory, iResponseFactory pResponseFactory, string pUserAgent,
-                        int pMaxRedirects = 3)
+        public Download([NotNull] iStreamReaderFactory pStreamReaderFactory,
+                        [NotNull] iResponseFactory pResponseFactory,
+                        [NotNull] string pUserAgent,
+                        int pMaxRedirects)
         {
             if (pStreamReaderFactory == null)
             {
-                throw new NullReferenceException("pStreamReaderFactory is null.");
+                throw new ArgumentNullException("pStreamReaderFactory");
             }
             if (pResponseFactory == null)
             {
-                throw new NullReferenceException("pResponseFactory is null.");
+                throw new ArgumentNullException("pResponseFactory");
             }
-            if (string.IsNullOrWhiteSpace(pUserAgent))
+            if (pUserAgent == null)
             {
-                throw new NullReferenceException("pUserAgent can not be null or empty.");
+                throw new ArgumentNullException("pUserAgent");
             }
-            if (pMaxRedirects <= 0)
+            if (pMaxRedirects < 0)
             {
-                throw new ArgumentOutOfRangeException("pMaxRedirects", "Must be greater then 0.");
+                throw new ArgumentOutOfRangeException("pMaxRedirects");
             }
 
             _streamReaderFactory = pStreamReaderFactory;
@@ -65,33 +68,37 @@ namespace GemsWeb
         /// <summary>
         /// Makes the request.
         /// </summary>
-        public iResponse Get(Uri pUrl)
+        [NotNull]
+        public iResponse Get([NotNull] Uri pUrl)
         {
             if (pUrl == null)
             {
-                throw new NullReferenceException("pUrl can not be null.");
+                throw new ArgumentNullException("pUrl");
+            }
+
+            WebRequest request = WebRequest.Create(pUrl);
+            HttpWebRequest httpRequest = request as HttpWebRequest;
+            if (httpRequest != null)
+            {
+                httpRequest.AllowAutoRedirect = true;
+                httpRequest.MaximumAutomaticRedirections = _maxRedirects;
+                httpRequest.UserAgent = _userAgent;
             }
 
             try
             {
-                WebRequest request = CreateRequest(pUrl);
-                WebResponse resp = request.GetResponse();
-                using (Stream stream = resp.GetResponseStream())
+                using (Stream stream = request.GetRequestStream())
                 {
-                    if (stream == null)
-                    {
-                        throw new NullReferenceException("Unable to open response stream.");
-                    }
                     try
                     {
-                        ContentType contentType = new ContentType(resp.ContentType);
+                        ContentType contentType = new ContentType(request.ContentType);
                         iStreamReader reader = _streamReaderFactory.Create(contentType);
                         if (reader == null)
                         {
                             throw new DownloadException(string.Format("Content-type: [{0}] has no reader.", contentType));
                         }
-                        iResponse response = reader.Read(contentType, stream);
-                        return response;
+
+                        return reader.Read(contentType, stream);
                     }
                     finally
                     {
@@ -103,34 +110,6 @@ namespace GemsWeb
             {
                 return _responseFactory.Create(e);
             }
-        }
-
-        /// <summary>
-        /// Creates a request object.
-        /// </summary>
-        public WebRequest CreateRequest(Uri pUrl)
-        {
-            if (pUrl == null)
-            {
-                throw new NullReferenceException("pUrl can not be null.");
-            }
-            if (!pUrl.IsAbsoluteUri)
-            {
-                throw new ArgumentException("Only absolute URIs allowed.", "pUrl");
-            }
-
-            WebRequest request = WebRequest.Create(pUrl);
-
-            HttpWebRequest httpRequest = request as HttpWebRequest;
-            if (httpRequest != null)
-            {
-                // follow redirects
-                httpRequest.AllowAutoRedirect = true;
-                httpRequest.MaximumAutomaticRedirections = _maxRedirects;
-                httpRequest.UserAgent = _userAgent;
-            }
-
-            return request;
         }
     }
 }

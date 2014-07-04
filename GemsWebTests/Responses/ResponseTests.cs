@@ -8,6 +8,8 @@ namespace GemsWebTests.Responses
     [TestClass]
     public class ResponseTests
     {
+        private static Type _retester = typeof (Response);
+
         [TestMethod]
         [ExpectedException(typeof(NullReferenceException))]
         public void Construct_1()

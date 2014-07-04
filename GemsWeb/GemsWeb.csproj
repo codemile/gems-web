@@ -37,10 +37,8 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotations\Classes.cs" />
     <Compile Include="Exceptions\DownloadException.cs" />
-    <Compile Include="GemsClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Readers\iStreamReaderFactory.cs" />
     <Compile Include="iDownloader.cs" />
     <Compile Include="Readers\TextReader.cs" />
