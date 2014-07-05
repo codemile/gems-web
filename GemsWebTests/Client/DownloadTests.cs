@@ -41,17 +41,10 @@ namespace GemsWebTests.Client
             Download download = new Download(_AGENT, 5, 500000);
             MemoryStream stream = new MemoryStream();
 
-            // mock objects
-            MockStreamReaderFactory streamReaderFactory = new MockStreamReaderFactory();
-            MockResponseOldFactory responseOldFactory = new MockResponseOldFactory();
-
             _test = new Maker();
             _test.UseAs(uri);
             _test.UseAs(download);
             _test.UseAs<Stream>(stream);
-
-            _test.UseAs<iStreamReaderFactory>(streamReaderFactory);
-            _test.UseAs<iResponseOldFactory>(responseOldFactory);
         }
 
         [TestMethod]

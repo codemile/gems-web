@@ -33,6 +33,45 @@ namespace GemsWeb.Client
         private readonly string _userAgent;
 
         /// <summary>
+        /// Creates a response object from a HTTP response.
+        /// </summary>
+        private Response ProcessResponse([NotNull] Uri pUrl, [NotNull] HttpWebResponse pHttpResp)
+        {
+            if (pUrl == null)
+            {
+                throw new ArgumentNullException("pUrl");
+            }
+            if (pHttpResp == null)
+            {
+                throw new ArgumentNullException("pHttpResp");
+            }
+
+            Response resp = new Response(pUrl, pHttpResp.ResponseUri, pHttpResp.StatusCode)
+                            {
+                                ContentType = pHttpResp.ContentType,
+                                Encoding = pHttpResp.ContentEncoding,
+                                CharSet = pHttpResp.CharacterSet
+                            };
+
+            _logger.Finer("{0} - {1}", (int)resp.Status, resp.ContentType);
+
+            if (pHttpResp.ContentLength <= 0)
+            {
+                return resp;
+            }
+
+            using (Stream stream = pHttpResp.GetResponseStream())
+            {
+                if (stream != null)
+                {
+                    resp.Read(stream, _limit);
+                }
+            }
+
+            return resp;
+        }
+
+        /// <summary>
         /// Constructor
         /// </summary>
         public Download([NotNull] string pUserAgent,
@@ -103,34 +142,23 @@ namespace GemsWeb.Client
             {
                 using (HttpWebResponse httpResp = (HttpWebResponse)request.GetResponse())
                 {
-                    Response resp = new Response(pUrl, httpResp.ResponseUri, httpResp.StatusCode)
-                                    {
-                                        ContentType = httpResp.ContentType,
-                                        Encoding = httpResp.ContentEncoding,
-                                        CharSet = httpResp.CharacterSet
-                                    };
-
-                    if (httpResp.ContentLength <= 0)
-                    {
-                        return resp;
-                    }
-
-                    using (Stream stream = httpResp.GetResponseStream())
-                    {
-                        if (stream != null)
-                        {
-                            resp.Read(stream, _limit);
-                        }
-                    }
-
-                    return resp;
+                    return ProcessResponse(pUrl, httpResp);
                 }
             }
-            catch (Exception e)
+            catch (WebException ex)
             {
-                LastError = e;
+                if (ex.Status == WebExceptionStatus.ProtocolError && ex.Response != null)
+                {
+                    return ProcessResponse(pUrl, (HttpWebResponse)ex.Response);
+                }
 
-                _logger.Exception(e);
+                LastError = ex;
+                _logger.Exception(ex);
+            }
+            catch (Exception ex)
+            {
+                LastError = ex;
+                _logger.Exception(ex);
             }
 
             return null;
