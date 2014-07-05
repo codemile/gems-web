@@ -1,7 +1,8 @@
 ﻿using System.Net.Mime;
 using GemsWeb.Readers;
+using GemsWebTests.Mock.Responses;
 
-namespace GemsWebTests.Mock
+namespace GemsWebTests.Mock.Readers
 {
     public class MockStreamReaderFactory : iStreamReaderFactory
     {
@@ -26,7 +27,7 @@ namespace GemsWebTests.Mock
         {
             return
                 new MockStreamReaderFactory(
-                    new MockStreamReader(new MockResponse(new ContentType(pContentType), pData, null, true)));
+                    new MockStreamReader(new MockResponseOld(new ContentType(pContentType), pData, null, true)));
         }
     }
 }

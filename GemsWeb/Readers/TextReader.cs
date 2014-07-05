@@ -14,28 +14,28 @@ namespace GemsWeb.Readers
         /// <summary>
         /// Creates the response object.
         /// </summary>
-        private readonly iResponseFactory _responseFactory;
+        private readonly iResponseOldFactory _responseOldFactory;
 
         /// <summary>
         /// Constructor.
         /// </summary>
-        public TextReader(iResponseFactory pResponseFactory)
+        public TextReader(iResponseOldFactory pResponseOldFactory)
         {
-            if (pResponseFactory == null)
+            if (pResponseOldFactory == null)
             {
                 throw new NullReferenceException("Argument is null.");
             }
-            _responseFactory = pResponseFactory;
+            _responseOldFactory = pResponseOldFactory;
         }
 
         /// <summary>
         /// Handles reading the text.
         /// </summary>
-        public iResponse Read(ContentType pContentType, Stream pStream)
+        public iResponseOld Read(ContentType pContentType, Stream pStream)
         {
             using (StreamReader reader = new StreamReader(pStream, Encoding.GetEncoding(pContentType.CharSet)))
             {
-                return _responseFactory.Create(pContentType, reader.ReadToEnd());
+                return _responseOldFactory.Create(pContentType, reader.ReadToEnd());
             }
         }
     }

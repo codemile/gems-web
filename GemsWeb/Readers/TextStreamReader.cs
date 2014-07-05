@@ -7,19 +7,19 @@ namespace GemsWeb.Readers
 {
     public class TextStreamReader : iStreamReader
     {
-        private readonly iResponseFactory _factory;
+        private readonly iResponseOldFactory _oldFactory;
 
-        public TextStreamReader(iResponseFactory pFactory)
+        public TextStreamReader(iResponseOldFactory pOldFactory)
         {
-            _factory = pFactory;
+            _oldFactory = pOldFactory;
         }
 
-        public iResponse Read(ContentType pContentType, Stream pStream)
+        public iResponseOld Read(ContentType pContentType, Stream pStream)
         {
             using (StreamReader reader = new StreamReader(pStream, Encoding.GetEncoding(pContentType.CharSet)))
             {
                 string str = reader.ReadToEnd();
-                return _factory.Create(pContentType, str);
+                return _oldFactory.Create(pContentType, str);
             }
         }
     }

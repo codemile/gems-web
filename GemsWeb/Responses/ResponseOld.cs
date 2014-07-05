@@ -6,7 +6,8 @@ namespace GemsWeb.Responses
     /// <summary>
     /// Holds the data from the response.
     /// </summary>
-    public class Response : iResponse
+    [Obsolete]
+    public class ResponseOld : iResponseOld
     {
         /// <summary>
         /// The content type.
@@ -26,7 +27,7 @@ namespace GemsWeb.Responses
         /// <summary>
         /// Constructor
         /// </summary>
-        public Response(ContentType pContentType, object pData)
+        public ResponseOld(ContentType pContentType, object pData)
         {
             if (pContentType == null)
             {
@@ -45,7 +46,7 @@ namespace GemsWeb.Responses
         /// <summary>
         /// Constructor
         /// </summary>
-        public Response(Exception pException)
+        public ResponseOld(Exception pException)
         {
             if (pException == null)
             {

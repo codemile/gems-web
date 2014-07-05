@@ -14,28 +14,28 @@ namespace GemsWeb.Readers
         /// <summary>
         /// Creates responses.
         /// </summary>
-        private readonly iResponseFactory _responseFactory;
+        private readonly iResponseOldFactory _responseOldFactory;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public BitmapReader(iResponseFactory pResponseFactory)
+        public BitmapReader(iResponseOldFactory pResponseOldFactory)
         {
-            if (pResponseFactory == null)
+            if (pResponseOldFactory == null)
             {
                 throw new NullReferenceException("Argument is null.");
             }
-            _responseFactory = pResponseFactory;
+            _responseOldFactory = pResponseOldFactory;
         }
 
         /// <summary>
         /// Creates a bitmap from the input stream.
         /// </summary>
-        public iResponse Read(ContentType pContentType, Stream pStream)
+        public iResponseOld Read(ContentType pContentType, Stream pStream)
         {
             using (Image img = Image.FromStream(pStream))
             {
-                return _responseFactory.Create(pContentType, new Bitmap(img));
+                return _responseOldFactory.Create(pContentType, new Bitmap(img));
             }
         }
     }

@@ -1,8 +1,8 @@
 ﻿using System;
-using GemsWeb;
+using GemsWeb.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace GemsWebTests
+namespace GemsWebTests.Client
 {
     [TestClass]
     public class DownloadRetryTests

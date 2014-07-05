@@ -3,7 +3,8 @@ using System.Net.Mime;
 
 namespace GemsWeb.Responses
 {
-    public interface iResponse
+    [Obsolete]
+    public interface iResponseOld
     {
         /// <summary>
         /// If the response has data, then this is the content type for that data.

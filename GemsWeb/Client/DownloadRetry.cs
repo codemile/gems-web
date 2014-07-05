@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading;
-using GemsWeb.Responses;
 
-namespace GemsWeb
+namespace GemsWeb.Client
 {
     /// <summary>
     /// Handles multiple attempts at downloading web resource.
@@ -35,10 +34,15 @@ namespace GemsWeb
         }
 
         /// <summary>
+        /// Provides the last error that was caught by the downloader, or Null.
+        /// </summary>
+        public Exception LastError { get; private set; }
+
+        /// <summary>
         /// Attempts to download the image.
         /// </summary>
         /// <param name="pUrl">The URL to get.</param>
-        public iResponse Get(Uri pUrl)
+        public Response Get(Uri pUrl)
         {
             int i = 0;
             bool retry = true;
@@ -48,7 +52,7 @@ namespace GemsWeb
 
             do
             {
-                iResponse resp = _childRequester.Get(pUrl);
+                Response resp = _childRequester.Get(pUrl);
 /*
                 switch (resp.getStatus())
                 {

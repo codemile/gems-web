@@ -8,6 +8,6 @@ namespace GemsWeb.Readers
     public interface iStreamReader
     {
         [NotNull]
-        iResponse Read([NotNull] ContentType pContentType, [NotNull] Stream pStream);
+        iResponseOld Read([NotNull] ContentType pContentType, [NotNull] Stream pStream);
     }
 }

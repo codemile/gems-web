@@ -11,14 +11,14 @@ namespace GemsWeb.Readers
         /// <summary>
         /// Used by the readers.
         /// </summary>
-        private readonly iResponseFactory _responseFactory;
+        private readonly iResponseOldFactory _responseOldFactory;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public StreamReaderFactory(iResponseFactory pResponseFactory)
+        public StreamReaderFactory(iResponseOldFactory pResponseOldFactory)
         {
-            _responseFactory = pResponseFactory;
+            _responseOldFactory = pResponseOldFactory;
         }
 
         /// <summary>
@@ -28,10 +28,10 @@ namespace GemsWeb.Readers
         {
             if (pContentType.MediaType.StartsWith("text/"))
             {
-                return new TextReader(_responseFactory);
+                return new TextReader(_responseOldFactory);
             }
             return pContentType.MediaType.StartsWith("image/")
-                ? new BitmapReader(_responseFactory)
+                ? new BitmapReader(_responseOldFactory)
                 : null;
         }
     }

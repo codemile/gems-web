@@ -38,22 +38,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Annotations\Classes.cs" />
+    <Compile Include="Client\Response.cs" />
     <Compile Include="Exceptions\DownloadException.cs" />
     <Compile Include="Readers\iStreamReaderFactory.cs" />
-    <Compile Include="iDownloader.cs" />
+    <Compile Include="Client\iDownloader.cs" />
     <Compile Include="Readers\TextReader.cs" />
-    <Compile Include="Responses\iResponseFactory.cs" />
+    <Compile Include="Responses\iResponseOldFactory.cs" />
     <Compile Include="Readers\iStreamReader.cs" />
     <Compile Include="Readers\TextStreamReader.cs" />
-    <Compile Include="Responses\iResponse.cs" />
-    <Compile Include="DownloadRetry.cs" />
+    <Compile Include="Responses\iResponseOld.cs" />
+    <Compile Include="Client\DownloadRetry.cs" />
     <Compile Include="Politeness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readers\BitmapReader.cs" />
     <Compile Include="Readers\StreamReaderFactory.cs" />
     <Compile Include="UserAgent.cs" />
-    <Compile Include="Download.cs" />
-    <Compile Include="Responses\Response.cs" />
+    <Compile Include="Client\Download.cs" />
+    <Compile Include="Responses\ResponseOld.cs" />
+    <Compile Include="Server\FileNotFoundHandler.cs" />
+    <Compile Include="Server\iResponseHandler.cs" />
+    <Compile Include="Server\WebServer.cs" />
+    <Compile Include="Server\StringHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\gems-logger\Logging\Logging.csproj">

@@ -2,16 +2,16 @@
 using System.Net.Mime;
 using GemsWeb.Responses;
 
-namespace GemsWebTests.Mock
+namespace GemsWebTests.Mock.Responses
 {
-    public class MockResponse : iResponse
+    public class MockResponseOld : iResponseOld
     {
         private readonly ContentType _contentType;
         private readonly object _data;
         private readonly Exception _exception;
         private readonly bool _success;
 
-        public MockResponse(ContentType pContentType, object pData, Exception pException, bool pSuccess)
+        public MockResponseOld(ContentType pContentType, object pData, Exception pException, bool pSuccess)
         {
             _contentType = pContentType;
             _data = pData;
