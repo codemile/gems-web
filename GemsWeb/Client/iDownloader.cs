@@ -1,6 +1,5 @@
 ﻿using System;
 using GemsWeb.Annotations;
-using GemsWeb.Responses;
 
 namespace GemsWeb.Client
 {
@@ -13,6 +12,7 @@ namespace GemsWeb.Client
         /// <summary>
         /// Provides the last error that was caught by the downloader, or Null.
         /// </summary>
+        [CanBeNull]
         Exception LastError { get; }
 
         /// <summary>

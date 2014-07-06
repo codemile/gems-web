@@ -51,18 +51,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Client\DownloadTests.cs" />
+    <Compile Include="Client\ResponseTests.cs" />
     <Compile Include="Exceptions\DownloadExceptionTests.cs" />
     <Compile Include="Mock\Client\MockDownloader.cs" />
-    <Compile Include="Mock\Responses\MockResponseOldFactory.cs" />
-    <Compile Include="Mock\Readers\MockStreamReaderFactory.cs" />
-    <Compile Include="Mock\Responses\MockResponseOld.cs" />
-    <Compile Include="Mock\Readers\MockStreamReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Readers\BitmapReaderTests.cs" />
-    <Compile Include="Readers\StreamReaderFactoryTests.cs" />
-    <Compile Include="Readers\TextReaderTests.cs" />
-    <Compile Include="Readers\TextStreamReaderTests.cs" />
-    <Compile Include="Responses\ResponseTests.cs" />
     <Compile Include="Client\DownloadRetryTests.cs" />
     <Compile Include="PolitenessTests.cs" />
     <Compile Include="UserAgentTests.cs" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -75,6 +76,11 @@ namespace GemsWeb.Client
                 throw new ArgumentNullException("pOriginalUrl");
             }
 
+            if (pUrl == null)
+            {
+                throw new ArgumentNullException("pUrl");
+            }
+
             OriginalUrl = pOriginalUrl;
             Url = pUrl;
             Status = pStatus;
@@ -87,11 +93,17 @@ namespace GemsWeb.Client
         /// </summary>
         /// <param name="pInput">The stream to read.</param>
         /// <param name="pLimit">The cut off limit for the stream size.</param>
-        public void Read([NotNull] Stream pInput, long pLimit)
+        /// <returns>Number of bytes read</returns>
+        public long Read([NotNull] Stream pInput, long pLimit)
         {
             if (pInput == null)
             {
                 throw new ArgumentNullException("pInput");
+            }
+
+            if (pLimit < 0)
+            {
+                throw new ArgumentOutOfRangeException("pLimit");
             }
 
             byte[] buffer = new byte[16 * 1024];
@@ -100,7 +112,12 @@ namespace GemsWeb.Client
                 int read;
                 while ((read = pInput.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    ms.Write(buffer, 0, read);
+                    long spaceLeft = pLimit - ms.Length;
+
+                    if (spaceLeft > 0)
+                    {
+                        ms.Write(buffer, 0, (int)Math.Min(read, spaceLeft));
+                    }
 
                     if (ms.Length >= pLimit)
                     {
@@ -110,6 +127,8 @@ namespace GemsWeb.Client
                 }
                 Data = ms.ToArray();
             }
+
+            return Data.Length;
         }
 
         /// <summary>
@@ -127,6 +146,27 @@ namespace GemsWeb.Client
             {
                 Encoding coding = System.Text.Encoding.GetEncoding(code);
                 return coding.GetString(Data);
+            }
+            catch (ArgumentException)
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts the body of the response to a bitmap.
+        /// </summary>
+        /// <returns></returns>
+        public Bitmap getAsBitmap()
+        {
+            if (Data == null)
+            {
+                return null;
+            }
+
+            try
+            {
+                return new Bitmap(new MemoryStream(Data));
             }
             catch (ArgumentException)
             {
