@@ -18,7 +18,7 @@ namespace GemsWeb.Server
         /// <summary>
         /// The default response for unhandled requests.
         /// </summary>
-        private readonly iResponseHandler _default;
+        private readonly iResponseProvider _default;
 
         /// <summary>
         /// The http listener
@@ -74,14 +74,14 @@ namespace GemsWeb.Server
         /// </summary>
         /// <param name="pPort">The port number to listen for connections.</param>
         /// <param name="pDefault">The default response for unhandled request, when Null a 404 response will be used.</param>
-        public WebServer(int pPort, iResponseHandler pDefault = null)
+        public WebServer(int pPort, iResponseProvider pDefault = null)
         {
             if (!HttpListener.IsSupported)
             {
                 throw new NotSupportedException();
             }
 
-            _default = pDefault ?? new FileNotFoundHandler();
+            _default = pDefault ?? new NotFoundResponse();
 
             _server = new HttpListener();
             _server.Prefixes.Add(string.Format("http://*:{0}/", pPort));

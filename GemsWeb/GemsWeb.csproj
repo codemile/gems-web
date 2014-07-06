@@ -52,13 +52,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Readers\BitmapReader.cs" />
     <Compile Include="Readers\StreamReaderFactory.cs" />
+    <Compile Include="Server\ErrorResponse.cs" />
     <Compile Include="UserAgent.cs" />
     <Compile Include="Client\Download.cs" />
     <Compile Include="Responses\ResponseOld.cs" />
-    <Compile Include="Server\FileNotFoundHandler.cs" />
-    <Compile Include="Server\iResponseHandler.cs" />
+    <Compile Include="Server\NotFoundResponse.cs" />
+    <Compile Include="Server\iResponseProvider.cs" />
     <Compile Include="Server\WebServer.cs" />
-    <Compile Include="Server\StringHandler.cs" />
+    <Compile Include="Server\TextResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\gems-logger\Logging\Logging.csproj">

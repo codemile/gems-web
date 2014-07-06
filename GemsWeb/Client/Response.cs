@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using GemsWeb.Annotations;
 
 namespace GemsWeb.Client
@@ -108,6 +109,28 @@ namespace GemsWeb.Client
                     }
                 }
                 Data = ms.ToArray();
+            }
+        }
+
+        /// <summary>
+        /// Converts the body of the response to a string.
+        /// </summary>
+        public string getAsString()
+        {
+            if (Data == null)
+            {
+                return null;
+            }
+
+            string code = string.IsNullOrWhiteSpace(Encoding) ? "UTF-8" : Encoding ?? "UTF-8";
+            try
+            {
+                Encoding coding = System.Text.Encoding.GetEncoding(code);
+                return coding.GetString(Data);
+            }
+            catch (ArgumentException)
+            {
+                return null;
             }
         }
     }

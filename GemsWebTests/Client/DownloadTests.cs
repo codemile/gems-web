@@ -1,11 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Net;
 using GemsWeb.Client;
-using GemsWeb.Readers;
-using GemsWeb.Responses;
 using GemsWeb.Server;
-using GemsWebTests.Mock.Readers;
-using GemsWebTests.Mock.Responses;
 using Logging;
 using Logging.Formatters;
 using Logging.Writers;
@@ -17,11 +14,6 @@ namespace GemsWebTests.Client
     [TestClass]
     public class DownloadTests
     {
-        /// <summary>
-        /// Logging
-        /// </summary>
-        private static readonly Logger _logger = Logger.Create(typeof(DownloadTests));
-
         private static Type _retester = typeof (Download);
         private const string _AGENT = @"Mozilla/5.0 (Android; Mobile; rv:13.0) Gecko/13.0 Firefox/13.0";
 
@@ -53,7 +45,7 @@ namespace GemsWebTests.Client
             ReTest.It("must not allow null parameters")
                 .Throws<ArgumentNullException>()
                 .That().Contains("pUserAgent").Then()
-                .When(() => { new Download(null, 5, 5000); });
+                .When(()=> { new Download(null, 5, 5000); });
         }
 
         [TestMethod]
@@ -62,7 +54,7 @@ namespace GemsWebTests.Client
             ReTest.It("redirects must be >= 0")
                 .Throws<ArgumentOutOfRangeException>()
                 .That().Contains("pMaxRedirects").Then()
-                .When(() => { new Download(_AGENT, -1, 5000); });
+                .When(()=> { new Download(_AGENT, -1, 5000); });
         }
 
         [TestMethod]
@@ -71,7 +63,7 @@ namespace GemsWebTests.Client
             ReTest.It("limit must be >= 0")
                 .Throws<ArgumentOutOfRangeException>()
                 .That().Contains("pLimit").Then()
-                .When(() => { new Download(_AGENT, 5, 0); });
+                .When(()=> { new Download(_AGENT, 5, 0); });
         }
 
         [TestMethod]
@@ -86,20 +78,54 @@ namespace GemsWebTests.Client
         }
 
         [TestMethod]
-        [DeploymentItem(@"Data\www.thinkingmedia.ca.html")]
         public void Get_2()
         {
+            const string html = "<html>Hello world</html>";
             Download download = _test.Make<Download>();
-
-            using (WebServer server = new WebServer(8888))
+            using (WebServer server = new WebServer(8888, TextResponse.Html(html)))
             {
-                Response resp = ReTest.It("creates a response object")
-                    .Returns<Response>(() => download.Get(new Uri("http://localhost:8888/")));
-
-                //Assert.IsTrue(resp.isSuccess());
-                //Assert.AreEqual("text/html", resp.getContentType().MediaType);
-                //Assert.AreEqual("UTF-8", resp.getContentType().CharSet);
+                Response resp = ReTest.It("requests a HTML response")
+                    .Returns<Response>(()=>download.Get(new Uri("http://localhost:8888/")));
+                Assert.AreEqual(HttpStatusCode.OK, resp.Status);
+                Assert.AreEqual("text/html", resp.ContentType);
+                Assert.AreEqual(html, resp.getAsString());
             }
+        }
+
+        [TestMethod]
+        public void Get_3()
+        {
+            Download download = _test.Make<Download>();
+            using (WebServer server = new WebServer(8888, new NotFoundResponse()))
+            {
+                Response resp = ReTest.It("gives a 404 response")
+                    .Returns<Response>(()=>download.Get(new Uri("http://localhost:8888/")));
+                Assert.AreEqual(HttpStatusCode.NotFound, resp.Status);
+            }
+        }
+
+        [TestMethod]
+        public void Get_4()
+        {
+            Download download = _test.Make<Download>();
+            using (WebServer server = new WebServer(8888, new ErrorResponse()))
+            {
+                Response resp = ReTest.It("gives a 500 response")
+                    .Returns<Response>(()=>download.Get(new Uri("http://localhost:8888/")));
+                Assert.AreEqual(HttpStatusCode.InternalServerError, resp.Status);
+            }
+        }
+
+        [TestMethod]
+        public void Get_5()
+        {
+            Download download = _test.Make<Download>();
+            Response resp = download.Get(new Uri("http://localhost:8888/"));
+
+            Assert.IsNull(resp);
+            Assert.IsNotNull(download.LastError);
+            Assert.IsInstanceOfType(download.LastError,typeof(WebException));
+            Assert.IsTrue(download.LastError.Message.Contains("Unable to connect to the remote server"));
         }
     }
 }

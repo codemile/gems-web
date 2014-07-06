@@ -3,7 +3,7 @@ using GemsWeb.Annotations;
 
 namespace GemsWeb.Server
 {
-    public interface iResponseHandler
+    public interface iResponseProvider
     {
         void Handle([NotNull] HttpListenerResponse pResponse);
     }
