@@ -36,6 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -75,6 +76,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Data\image.gif" />
+    <EmbeddedResource Include="Data\image.jpeg" />
+    <EmbeddedResource Include="Data\image.png" />
     <Content Include="Data\www.thinkingmedia.ca.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

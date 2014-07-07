@@ -39,14 +39,10 @@ namespace GemsWeb.Client
         /// <summary>
         /// The length of the body.
         /// </summary>
-        public long Length {
+        public long Length
+        {
             get { return (Data == null) ? 0 : Data.Length; }
         }
-
-        /// <summary>
-        /// True if the some of the data was trimmed because of download limits.
-        /// </summary>
-        public bool Truncated { get; private set; }
 
         /// <summary>
         /// The original URL before any redirects.
@@ -57,6 +53,11 @@ namespace GemsWeb.Client
         /// The response status code.
         /// </summary>
         public HttpStatusCode Status { get; private set; }
+
+        /// <summary>
+        /// True if the some of the data was trimmed because of download limits.
+        /// </summary>
+        public bool Truncated { get; private set; }
 
         /// <summary>
         /// URL that represents this response.
@@ -106,6 +107,11 @@ namespace GemsWeb.Client
                 throw new ArgumentOutOfRangeException("pLimit");
             }
 
+            if (pLimit == 0)
+            {
+                pLimit = long.MaxValue;
+            }
+
             byte[] buffer = new byte[16 * 1024];
             using (MemoryStream ms = new MemoryStream())
             {
@@ -132,20 +138,19 @@ namespace GemsWeb.Client
         }
 
         /// <summary>
-        /// Converts the body of the response to a string.
+        /// Converts the body of the response to a bitmap.
         /// </summary>
-        public string getAsString()
+        /// <returns></returns>
+        public Bitmap getAsBitmap()
         {
             if (Data == null)
             {
-                return null;
+                throw new InvalidOperationException("Response contains no data");
             }
 
-            string code = string.IsNullOrWhiteSpace(Encoding) ? "UTF-8" : Encoding ?? "UTF-8";
             try
             {
-                Encoding coding = System.Text.Encoding.GetEncoding(code);
-                return coding.GetString(Data);
+                return new Bitmap(new MemoryStream(Data));
             }
             catch (ArgumentException)
             {
@@ -154,19 +159,20 @@ namespace GemsWeb.Client
         }
 
         /// <summary>
-        /// Converts the body of the response to a bitmap.
+        /// Converts the body of the response to a string.
         /// </summary>
-        /// <returns></returns>
-        public Bitmap getAsBitmap()
+        public string getAsString()
         {
             if (Data == null)
             {
-                return null;
+                throw new InvalidOperationException("Response contains no data");
             }
 
+            string code = string.IsNullOrWhiteSpace(Encoding) ? "UTF-8" : Encoding ?? "UTF-8";
             try
             {
-                return new Bitmap(new MemoryStream(Data));
+                Encoding coding = System.Text.Encoding.GetEncoding(code);
+                return coding.GetString(Data);
             }
             catch (ArgumentException)
             {
