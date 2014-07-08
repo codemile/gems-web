@@ -2,6 +2,8 @@ namespace GemsWeb
 {
     public static class UserAgent
     {
+        public const string MOZILLA = "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1)";
+
         /// <summary>
         /// Formulate a user agent to identify the robot.
         /// </summary>

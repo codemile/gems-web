@@ -37,15 +37,6 @@ namespace GemsWeb.Client
         /// </summary>
         private Response ProcessResponse([NotNull] Uri pUrl, [NotNull] HttpWebResponse pHttpResp)
         {
-            if (pUrl == null)
-            {
-                throw new ArgumentNullException("pUrl");
-            }
-            if (pHttpResp == null)
-            {
-                throw new ArgumentNullException("pHttpResp");
-            }
-
             Response resp = new Response(pUrl, pHttpResp.ResponseUri, pHttpResp.StatusCode)
                             {
                                 ContentType = pHttpResp.ContentType,
@@ -55,10 +46,12 @@ namespace GemsWeb.Client
 
             _logger.Finer("{0} - {1}", (int)resp.Status, resp.ContentType);
 
+/*
             if (pHttpResp.ContentLength <= 0)
             {
                 return resp;
             }
+*/
 
             using (Stream stream = pHttpResp.GetResponseStream())
             {
@@ -114,25 +107,20 @@ namespace GemsWeb.Client
                 throw new ArgumentNullException("pUrl");
             }
 
+            if (!pUrl.IsAbsoluteUri)
+            {
+                throw new DownloadException(string.Format("Relative URLs not supported: {0}", pUrl));
+            }
+
             if (pUrl.Scheme != "http"
                 && pUrl.Scheme != "https")
             {
                 throw new DownloadException(string.Format("Only HTTP scheme allowed: {0}", pUrl));
             }
 
-            if (!pUrl.IsAbsoluteUri)
-            {
-                throw new DownloadException(string.Format("Relative URLs not supported: {0}", pUrl));
-            }
-
             _logger.Finer(string.Format("GET: {0}", pUrl));
 
-            HttpWebRequest request = WebRequest.Create(pUrl) as HttpWebRequest;
-            if (request == null)
-            {
-                throw new DownloadException(string.Format("Failed to create request: {0}", pUrl));
-            }
-
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(pUrl);
             request.AllowAutoRedirect = true;
             request.MaximumAutomaticRedirections = _maxRedirects;
             request.UserAgent = _userAgent;
@@ -157,6 +145,7 @@ namespace GemsWeb.Client
             }
             catch (Exception ex)
             {
+                // TODO: What other kinds of exceptions are possible?
                 LastError = ex;
                 _logger.Exception(ex);
             }

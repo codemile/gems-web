@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using GemsWeb.Client;
+using GemsWeb.Exceptions;
 using GemsWeb.Server;
 using Logging;
 using Logging.Formatters;
@@ -18,7 +19,6 @@ namespace GemsWebTests.Client
         private const string _AGENT = @"Mozilla/5.0 (Android; Mobile; rv:13.0) Gecko/13.0 Firefox/13.0";
 
         private Maker _test;
-        public TestContext TestContext { get; set; }
 
         [TestInitialize]
         public void AtStart()
@@ -80,6 +80,31 @@ namespace GemsWebTests.Client
         [TestMethod]
         public void Get_2()
         {
+            Download download = _test.Make<Download>();
+
+            ReTest.It("none HTTP requests are not supported")
+                .Throws<DownloadException>()
+                .That()
+                .Contains("HTTP scheme")
+                .Then()
+                .When(()=>download.Get(new Uri("ftp://localhost:9999")));
+        }
+
+        [TestMethod]
+        public void Get_2b()
+        {
+            Download download = _test.Make<Download>();
+            Uri uri = new Uri("http://localhost:9999/").MakeRelativeUri(new Uri("http://localhost:9999/home/page.html"));
+
+            ReTest.It("Absolute URLs only")
+                .Throws<DownloadException>()
+                .That().Contains("Relative URLs").Then()
+                .When(() => download.Get(uri));
+        }
+
+        [TestMethod]
+        public void Get_3()
+        {
             const string html = "<html>Hello world</html>";
             Download download = _test.Make<Download>();
             using (WebServer server = new WebServer(8888, TextResponse.Html(html)))
@@ -93,7 +118,7 @@ namespace GemsWebTests.Client
         }
 
         [TestMethod]
-        public void Get_3()
+        public void Get_4()
         {
             Download download = _test.Make<Download>();
             using (WebServer server = new WebServer(8888, new NotFoundResponse()))
@@ -105,7 +130,7 @@ namespace GemsWebTests.Client
         }
 
         [TestMethod]
-        public void Get_4()
+        public void Get_5()
         {
             Download download = _test.Make<Download>();
             using (WebServer server = new WebServer(8888, new ErrorResponse()))
@@ -117,14 +142,14 @@ namespace GemsWebTests.Client
         }
 
         [TestMethod]
-        public void Get_5()
+        public void Get_6()
         {
             Download download = _test.Make<Download>();
             Response resp = download.Get(new Uri("http://localhost:8888/"));
 
             Assert.IsNull(resp);
             Assert.IsNotNull(download.LastError);
-            Assert.IsInstanceOfType(download.LastError,typeof(WebException));
+            Assert.IsInstanceOfType(download.LastError, typeof (WebException));
             Assert.IsTrue(download.LastError.Message.Contains("Unable to connect to the remote server"));
         }
     }
