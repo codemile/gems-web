@@ -42,7 +42,9 @@
     <Compile Include="Exceptions\DownloadException.cs" />
     <Compile Include="Client\iDownloader.cs" />
     <Compile Include="Client\DownloadRetry.cs" />
-    <Compile Include="Politeness.cs" />
+    <Compile Include="Politeness\iPoliteness.cs" />
+    <Compile Include="Politeness\PolitenessByDomain.cs" />
+    <Compile Include="Politeness\PolitenessCounter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\ErrorResponse.cs" />
     <Compile Include="UserAgent.cs" />

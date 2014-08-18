@@ -4,19 +4,19 @@ using System.Linq;
 using System.Threading;
 using Logging;
 
-namespace GemsWeb
+namespace GemsWeb.Politeness
 {
     /// <summary>
     /// Handles politeness when hitting a web server repeatedly with
     /// requests. This is done by causing a delay between requests
     /// to the same domain.
     /// </summary>
-    public class Politeness
+    public class PolitenessByDomain : iPoliteness
     {
         /// <summary>
         /// Logging
         /// </summary>
-        private static readonly Logger _logger = Logger.Create(typeof (Politeness));
+        private static readonly Logger _logger = Logger.Create(typeof (PolitenessByDomain));
 
         /// <summary>
         /// Used to control thread access
@@ -102,7 +102,7 @@ namespace GemsWeb
         /// Constructor
         /// </summary>
         /// <param name="pWaitMilliseconds">Min milliseconds between requests of the same domain.</param>
-        public Politeness(int pWaitMilliseconds)
+        public PolitenessByDomain(int pWaitMilliseconds)
         {
             _waitMilliseconds = pWaitMilliseconds;
             _sync = new object();

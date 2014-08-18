@@ -1,5 +1,6 @@
 ﻿using System;
 using GemsWeb;
+using GemsWeb.Politeness;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GemsWebTests
@@ -7,6 +8,6 @@ namespace GemsWebTests
     [TestClass]
     public class PolitenessTests
     {
-        private static Type _retester = typeof (Politeness);
+        private static Type _retester = typeof (PolitenessByDomain);
     }
 }
