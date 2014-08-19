@@ -13,6 +13,16 @@ namespace GemsWeb.Client
     public class Download : iDownloader
     {
         /// <summary>
+        /// 1 kilobyte
+        /// </summary>
+        public const int KB = 1024;
+
+        /// <summary>
+        /// 1 megabyte
+        /// </summary>
+        public const int MB = KB * 1024;
+
+        /// <summary>
         /// Logging
         /// </summary>
         private static readonly Logger _logger = Logger.Create(typeof (Download));
