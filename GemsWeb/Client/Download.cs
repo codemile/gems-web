@@ -54,7 +54,10 @@ namespace GemsWeb.Client
                                 CharSet = pHttpResp.CharacterSet
                             };
 
-            _logger.Finer("{0} - {1}", (int)resp.Status, resp.ContentType);
+            if (resp.Status != HttpStatusCode.OK)
+            {
+                _logger.Finer("{0} - {1}", (int)resp.Status, resp.ContentType);
+            }
 
 /*
             if (pHttpResp.ContentLength <= 0)
