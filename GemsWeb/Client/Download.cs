@@ -131,7 +131,7 @@ namespace GemsWeb.Client
                 throw new DownloadException(string.Format("Only HTTP scheme allowed: {0}", pUrl));
             }
 
-            _logger.Finer(string.Format("GET: {0}", pUrl));
+            _logger.Finer("GET: {0}", pUrl);
 
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(pUrl);
             request.AllowAutoRedirect = true;
@@ -154,7 +154,6 @@ namespace GemsWeb.Client
                 }
 
                 LastError = ex;
-                _logger.Exception(ex);
             }
             catch (Exception ex)
             {
