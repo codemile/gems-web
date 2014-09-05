@@ -155,6 +155,10 @@ namespace GemsWeb.Client
 
                 LastError = ex;
             }
+            catch (IOException ex)
+            {
+                LastError = ex;
+            }
             catch (Exception ex)
             {
                 // TODO: What other kinds of exceptions are possible?
