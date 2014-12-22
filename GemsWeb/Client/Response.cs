@@ -47,6 +47,7 @@ namespace GemsWeb.Client
         /// <summary>
         /// The original URL before any redirects.
         /// </summary>
+        [NotNull]
         public Uri OriginalUrl { get; private set; }
 
         /// <summary>
@@ -62,6 +63,7 @@ namespace GemsWeb.Client
         /// <summary>
         /// URL that represents this response.
         /// </summary>
+        [NotNull]
         public Uri Url { get; private set; }
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace GemsWeb.Client
         /// <summary>
         /// Converts the body of the response to a bitmap.
         /// </summary>
-        /// <returns></returns>
+        [CanBeNull]
         public Bitmap getAsBitmap()
         {
             if (Data == null)
@@ -161,6 +163,7 @@ namespace GemsWeb.Client
         /// <summary>
         /// Converts the body of the response to a string.
         /// </summary>
+        [CanBeNull]
         public string getAsString()
         {
             if (Data == null)
