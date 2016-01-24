@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading;
-using Logging;
+using GemsLogger;
 
 namespace GemsWeb.Server
 {

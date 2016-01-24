@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using GemsLogger;
+using GemsLogger.Formatters;
+using GemsLogger.Writers;
 using GemsWeb.Client;
 using GemsWeb.Exceptions;
 using GemsWeb.Server;
-using Logging;
-using Logging.Formatters;
-using Logging.Writers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ReTester;
 

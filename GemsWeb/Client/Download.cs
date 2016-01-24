@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Net;
+using GemsLogger;
 using GemsWeb.Annotations;
 using GemsWeb.Exceptions;
-using Logging;
 
 namespace GemsWeb.Client
 {

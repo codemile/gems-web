@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Logging;
+using GemsLogger;
 
 namespace GemsWeb.Politeness
 {
