@@ -66,7 +66,7 @@
     <Compile Include="UserAgentTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\gems-logger\Logging\Logging.csproj">
+    <ProjectReference Include="..\..\gems-logger\GemsLogger\GemsLogger.csproj">
       <Project>{501504DE-66C8-4430-B469-E1746BFB2D17}</Project>
       <Name>Logging</Name>
     </ProjectReference>
@@ -78,9 +78,6 @@
       <Project>{111FF981-8905-4A12-AB94-0F6ACEE0A824}</Project>
       <Name>GemsWeb</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Data\image.gif" />
